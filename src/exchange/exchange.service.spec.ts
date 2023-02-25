@@ -2,7 +2,6 @@ import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CurrenciesService, ExchangeService } from './exchange.service';
 
-
 describe('ExchangeService', () => {
   let service: ExchangeService;
   let currenciesService: CurrenciesService;
@@ -51,6 +50,15 @@ describe('ExchangeService', () => {
       await service.convertAmount({ from: 'USD', to: 'BRL', amount: 1 });
       expect(currenciesService.getCurrency).toBeCalledWith('USD');
       expect(currenciesService.getCurrency).toHaveBeenCalledWith('BRL');
+    });
+
+    it('should be throw when getCurrency throw', async () => {
+      (currenciesService.getCurrency as jest.Mock).mockRejectedValue(
+        new Error(),
+      );
+      await expect(
+        service.convertAmount({ from: 'INVALID', to: 'BRL', amount: 1 }),
+      ).rejects.toThrow();
     });
   });
 });
