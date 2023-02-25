@@ -11,6 +11,6 @@ export class ExchangeService {
     }
 
     const currencyFrom = this.currenciesService.getCurrency(from);
-    const currencyTo = this.currenciesService.getCurrency(from);
+    const currencyTo = this.currenciesService.getCurrency(to);
   }
 }
