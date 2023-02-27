@@ -16,6 +16,10 @@ export class CurrenciesRepository {
   async updateCurrency({ currency, value }): Promise<any> {
     //
   }
+
+  async deleteCurrency(currency): Promise<any> {
+    //
+  }
 }
 
 @Injectable()
@@ -55,6 +59,14 @@ export class CurrenciesService {
         currency,
         value,
       });
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async deleteCurrency(currency: string): Promise<any> {
+    try {
+      return await this.currenciesRepository.deleteCurrency(currency);
     } catch (error) {
       throw new InternalServerErrorException();
     }
